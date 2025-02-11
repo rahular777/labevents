@@ -1,0 +1,93 @@
+#include <iostream>
+#include <vector> // For dynamic arrays (vectors)
+
+using namespace std;
+
+// Structure to represent a student
+struct Student {
+    string name;
+    int rollNumber;
+    vector<int> marks; // Use a vector for marks, allowing for a variable number of subjects
+    double averageMarks;
+};
+
+// Function to calculate the average marks of a student
+double calculateAverage(const Student& student) {
+    if (student.marks.empty()) {
+        return 0.0; // Avoid division by zero if no marks are entered
+    }
+    int sum = 0;
+    for (int mark : student.marks) {
+        sum += mark;
+    }
+    return (double)sum / student.marks.size();
+}
+
+// Function to perform matrix addition
+vector<vector<int>> addMatrices(const vector<vector<int>>& matrix1, const vector<vector<int>>& matrix2) {
+    if (matrix1.size() != matrix2.size() || matrix1[0].size() != matrix2[0].size()) {
+        cerr << "Error: Matrices must have the same dimensions for addition." << endl;
+        return {}; // Return an empty vector to indicate an error
+    }
+
+    int rows = matrix1.size();
+    int cols = matrix1[0].size();
+    vector<vector<int>> result(rows, vector<int>(cols));
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+    return result;
+}
+
+int main() {
+    // Student Example
+    Student student1;
+    student1.name = "Alice";
+    student1.rollNumber = 123;
+    student1.marks = {85, 92, 78, 90}; // Example marks for 4 subjects
+    student1.averageMarks = calculateAverage(student1);
+
+    cout << "Student Name: " << student1.name << endl;
+    cout << "Roll Number: " << student1.rollNumber << endl;
+    cout << "Average Marks: " << student1.averageMarks << endl;
+
+
+    // Matrix Example
+    vector<vector<int>> matrixA = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    vector<vector<int>> matrixB = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+
+    vector<vector<int>> sumMatrix = addMatrices(matrixA, matrixB);
+
+    cout << "\nMatrix A:" << endl;
+    for (const auto& row : matrixA) {
+        for (int val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "\nMatrix B:" << endl;
+    for (const auto& row : matrixB) {
+        for (int val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+
+
+    if (!sumMatrix.empty()) { // Check for errors before printing the sum
+        cout << "\nSum of Matrices:" << endl;
+        for (const auto& row : sumMatrix) {
+            for (int val : row) {
+                cout << val << " ";
+            }
+            cout << endl;
+        }
+    }
+
+
+    return 0;
+}

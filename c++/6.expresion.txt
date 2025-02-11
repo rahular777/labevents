@@ -1,0 +1,88 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <cmath>
+#include <stdexcept>
+
+using namespace std;
+
+int precedence(char op) {
+    return (op == '+' || op == '-') ? 1 : (op == '*' || op == '/') ? 2 : (op == '^') ? 3 : 0;
+}
+
+double applyOp(double a, double b, char op) {
+    switch (op) {
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/': return (b == 0) ? throw runtime_error("Division by zero!") : a / b;
+        case '^': return pow(a, b);
+        default: throw runtime_error("Invalid operator!");
+    }
+}
+
+double evaluate(const string& expression) {
+    stack<double> values;
+    stack<char> operators;
+    stringstream ss(expression);
+    string token;
+    vector<string> tokens;
+
+    while (ss >> token) tokens.push_back(token);
+
+    for (const string& token : tokens) {
+        if (isdigit(token[0]) || (token.size() > 1 && token[0] == '-' && isdigit(token[1]))) {
+            values.push(stod(token));
+        } else if (token == "(") {
+            operators.push('(');
+        } else if (token == ")") {
+            while (!operators.empty() && operators.top() != '(') {
+                double val2 = values.top(); values.pop();
+                double val1 = values.top(); values.pop();
+                char op = operators.top(); operators.pop();
+                values.push(applyOp(val1, val2, op));
+            }
+            operators.pop();
+        } else if (ispunct(token[0])) {
+            char op = token[0];
+            while (!operators.empty() && precedence(op) <= precedence(operators.top())) {
+                double val2 = values.top(); values.pop();
+                double val1 = values.top(); values.pop();
+                char prevOp = operators.top(); operators.pop();
+                values.push(applyOp(val1, val2, prevOp));
+            }
+            operators.push(op);
+        } else {
+            throw runtime_error("Invalid token: " + token);
+        }
+    }
+
+    while (!operators.empty()) {
+        double val2 = values.top(); values.pop();
+        double val1 = values.top(); values.pop();
+        char op = operators.top(); operators.pop();
+        values.push(applyOp(val1, val2, op));
+    }
+
+    return values.top();
+}
+
+int main() {
+    string expression;
+    cout << "Enter an arithmetic expression: ";
+    getline(cin, expression);
+
+    try {
+        cout << "Result: " << evaluate(expression) << endl;
+    } catch (const runtime_error& error) {
+        cerr << "Error: " << error.what() << endl;
+        return 1;
+    } catch (const invalid_argument& e) {
+        cerr << "Error: Invalid argument in expression: " << e.what() << endl;
+        return 1;
+    }
+
+    return 0;
+}

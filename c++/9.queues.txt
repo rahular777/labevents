@@ -1,0 +1,105 @@
+#include <iostream>
+using namespace std;
+
+const int MAX_SIZE = 5; // Maximum size of the queue
+
+class Queue {
+private:
+    int front, rear;
+    int arr[MAX_SIZE];
+
+public:
+    Queue() {
+        front = -1;
+        rear = -1;
+    }
+
+    // Function to check if the queue is full
+    bool isFull() {
+        return (rear == MAX_SIZE - 1);
+    }
+
+    // Function to check if the queue is empty
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    // Function to add an element to the queue (enqueue)
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Queue Overflow! Cannot enqueue " << value << ", queue is full." << endl;
+        } else {
+            if (isEmpty()) {
+                front = rear = 0; // Initialize front and rear for the first element
+            } else {
+                rear++;
+            }
+            arr[rear] = value;
+            cout << value << " has been enqueued." << endl;
+        }
+    }
+
+    // Function to remove an element from the queue (dequeue)
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue Underflow! Cannot dequeue, queue is empty." << endl;
+        } else {
+            int removedValue = arr[front];
+            if (front == rear) {
+                front = rear = -1; // Reset queue when the last element is removed
+            } else {
+                front++;
+            }
+            cout << removedValue << " has been dequeued." << endl;
+        }
+    }
+
+    // Function to display the queue
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty." << endl;
+        } else {
+            cout << "Queue elements: ";
+            for (int i = front; i <= rear; i++) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    Queue q;
+    int choice, value;
+
+    while (true) {
+        cout << "\nQueue Operations:" << endl;
+        cout << "1. Enqueue" << endl;
+        cout << "2. Dequeue" << endl;
+        cout << "3. Display" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the value to enqueue: ";
+                cin >> value;
+                q.enqueue(value);
+                break;
+            case 2:
+                q.dequeue();
+                break;
+            case 3:
+                q.display();
+                break;
+            case 4:
+                cout << "Exiting the program." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    }
+
+    return 0;
+}

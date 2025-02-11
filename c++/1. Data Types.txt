@@ -1,0 +1,137 @@
+1. Data Types
+
+C++ offers various data types to represent different kinds of values. Here are some of the most common ones:
+
+C++
+
+#include <iostream>
+
+int main() {
+    int age = 30;              // Integer (whole numbers)
+    float height = 5.8;        // Floating-point (decimal numbers)
+    double weight = 75.5;      // Double-precision floating-point
+    char initial = 'J';        // Character (single character)
+    bool isStudent = true;    // Boolean (true or false)
+    std::string name = "John Doe"; // String (sequence of characters)
+
+    std::cout << "Age: " << age << std::endl;
+    std::cout << "Height: " << height << std::endl;
+    std::cout << "Weight: " << weight << std::endl;
+    std::cout << "Initial: " << initial << std::endl;
+    std::cout << "Is Student: " << isStudent << std::endl;
+    std::cout << "Name: " << name << std::endl;
+
+    return 0;
+}
+2. Looping Structures
+
+Loops allow you to repeat a block of code multiple times. C++ provides three main loop types:
+
+for loop: Used when you know the number of iterations beforehand.
+C++
+
+#include <iostream>
+
+int main() {
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Iteration: " << i + 1 << std::endl;
+    }
+    return 0;
+}
+while loop: Used when the number of iterations is unknown and depends on a condition.
+C++
+
+#include <iostream>
+
+int main() {
+    int i = 0;
+    while (i < 5) {
+        std::cout << "Iteration: " << i + 1 << std::endl;
+        i++;
+    }
+    return 0;
+}
+do-while loop: Similar to while, but the code block executes at least once.
+C++
+
+#include <iostream>
+
+int main() {
+    int i = 0;
+    do {
+        std::cout << "Iteration: " << i + 1 << std::endl;
+        i++;
+    } while (i < 5);
+    return 0;
+}
+3. Decision-Making Structures
+
+Decision-making structures allow you to execute different code blocks based on conditions. The most common ones are:
+
+if statement: Executes a block of code if a condition is true.
+C++
+
+#include <iostream>
+
+int main() {
+    int age = 18;
+    if (age >= 18) {
+        std::cout << "You are eligible to vote." << std::endl;
+    }
+    return 0;
+}
+else statement: Executes a block of code if the if condition is false.
+C++
+
+#include <iostream>
+
+int main() {
+    int age = 16;
+    if (age >= 18) {
+        std::cout << "You are eligible to vote." << std::endl;
+    } else {
+        std::cout << "You are not eligible to vote." << std::endl;
+    }
+    return 0;
+}
+else if statement: Allows you to check multiple conditions.
+C++
+
+#include <iostream>
+
+int main() {
+    int score = 75;
+    if (score >= 90) {
+        std::cout << "Excellent!" << std::endl;
+    } else if (score >= 70) {
+        std::cout << "Good!" << std::endl;
+    } else if (score >= 50) {
+        std::cout << "Average." << std::endl;
+    } else {
+        std::cout << "Below average." << std::endl;
+    }
+    return 0;
+}
+switch statement: Efficiently handles multiple conditions based on a single variable.
+C++
+
+#include <iostream>
+
+int main() {
+  char grade = 'B';
+
+  switch (grade) {
+    case 'A':
+      std::cout << "Excellent!" << std::endl;
+      break;
+    case 'B':
+      std::cout << "Good!" << std::endl;
+      break;
+    case 'C':
+      std::cout << "Fair." << std::endl;
+      break;
+    default:
+      std::cout << "Invalid grade." << std::endl;
+  }
+  return 0;
+}

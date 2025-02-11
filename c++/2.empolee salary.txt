@@ -1,0 +1,38 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+    double basicPay, hra, ta, it, grossSalary, netSalary;
+
+    
+    cout << "Enter the basic pay: ";
+    cin >> basicPay;
+
+    // Calculate HRA, TA, and IT
+    hra = 0.10 * basicPay;  // 10% of basic pay
+    ta = 0.05 * basicPay;   // 5% of basic pay
+    it = 0.025 * basicPay;  // 2.5% of basic pay
+
+    // Calculate gross salary
+    grossSalary = basicPay + hra + ta;
+
+    // Calculate net salary (gross salary - deductions)
+    netSalary = grossSalary - it;
+
+    // Display the results with proper formatting
+    cout << fixed << setprecision(2); // Set precision to 2 decimal places
+
+    cout << "\nSalary Calculation:" << endl;
+    cout << "--------------------" << endl;
+    cout << "Basic Pay:  " << basicPay << endl;
+    cout << "HRA:        " << hra << endl;
+    cout << "TA:         " << ta << endl;
+    cout << "IT:         " << it << endl;
+    cout << "--------------------" << endl;
+    cout << "Gross Salary: " << grossSalary << endl;
+    cout << "Net Salary:   " << netSalary << endl;
+
+    return 0;
+}

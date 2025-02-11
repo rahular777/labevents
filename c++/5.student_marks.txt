@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <numeric> // For accumulate
+
+using namespace std;
+
+// Structure to represent a student
+struct Student {
+    string name;
+    int rollNumber;
+    vector<double> testMarks; // Vector for test marks (can be doubles for more precision)
+    double averageMarks;
+};
+
+// Function to calculate the average marks of a student
+double calculateAverage(const Student& student) {
+    if (student.testMarks.empty()) {
+        return 0.0; // Avoid division by zero
+    }
+    // Efficiently calculate the sum using accumulate (from <numeric>)
+    double sum = accumulate(student.testMarks.begin(), student.testMarks.end(), 0.0);
+    return sum / student.testMarks.size();
+}
+
+int main() {
+    int numStudents;
+
+    cout << "Enter the number of students: ";
+    cin >> numStudents;
+
+    // Create a vector to store student data (dynamic array of structures)
+    vector<Student> students(numStudents);
+
+    for (int i = 0; i < numStudents; i++) {
+        cout << "\nEnter details for student " << i + 1 << ":" << endl;
+        cout << "Name: ";
+        cin.ignore(); // Clear the newline character from previous input
+        getline(cin, students[i].name); // Use getline to read names with spaces
+        cout << "Roll Number: ";
+        cin >> students[i].rollNumber;
+
+        int numTests;
+        cout << "Enter the number of tests for this student: ";
+        cin >> numTests;
+
+        students[i].testMarks.resize(numTests); // Resize the vector to hold the marks
+        cout << "Enter the test marks:" << endl;
+        for (int j = 0; j < numTests; j++) {
+            cin >> students[i].testMarks[j];
+        }
+
+        students[i].averageMarks = calculateAverage(students[i]);
+    }
+
+    // Display the results
+    cout << "\nStudent Test Results:" << endl;
+    cout << "----------------------" << endl;
+    for (const auto& student : students) {
+        cout << "Name: " << student.name << endl;
+        cout << "Roll Number: " << student.rollNumber << endl;
+        cout << "Average Marks: " << student.averageMarks << endl;
+        cout << "----------------------" << endl;
+    }
+
+    return 0;
+}
